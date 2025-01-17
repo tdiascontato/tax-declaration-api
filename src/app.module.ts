@@ -1,3 +1,4 @@
+// src\app.module.ts
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -13,9 +14,9 @@ import { Declaration } from './declarations/entities/declaration.entity';
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
-      port: 5050,
+      port: 5432,
       username: 'postgres',
-      password: 'postgresp455w0rd',
+      password: 'postgres',
       database: 'tax_declarations',
       entities: [User, Declaration],
       autoLoadEntities: true,
@@ -24,10 +25,6 @@ import { Declaration } from './declarations/entities/declaration.entity';
     UsersModule,
     DeclarationsModule,
     AuthModule,
-
-    AuthModule,
-    UsersModule,
-    DeclarationsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

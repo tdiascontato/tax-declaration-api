@@ -1,4 +1,5 @@
-import { Module } from '@nestjs/common';
+// src\declarations\declarations.module.ts
+import { forwardRef, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DeclarationsController } from './declarations.controller';
 import { DeclarationsService } from './declarations.service';
@@ -7,11 +8,11 @@ import { UsersModule } from '../users/users.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Declaration]), // Registra a entidade no contexto do módulo
-    UsersModule, // Importa o módulo Users se o DeclarationsService depende dele
+    TypeOrmModule.forFeature([Declaration]),
+    forwardRef(() => UsersModule),
   ],
   controllers: [DeclarationsController],
   providers: [DeclarationsService],
-  exports: [DeclarationsService], // Caso precise exportar para outros módulos
+  exports: [DeclarationsService],
 })
 export class DeclarationsModule {}
