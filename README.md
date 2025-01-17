@@ -1,99 +1,147 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Tax Declaration API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Descrição
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+A Tax Declaration API é um sistema desenvolvido para gerenciar usuários e declarações fiscais. Utiliza o framework [NestJS](https://nestjs.com/) para organização de módulos e é projetada para ser executada em um ambiente Docker.
 
-## Description
+---
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Endpoints
 
-## Project setup
+### Usuários (`/users`)
 
-```bash
-$ npm install
-```
+#### POST `/users/register`
+Registra um novo usuário.
 
-## Compile and run the project
+- **Body:**
+  ```json
+  {
+    "name": "string",
+    "email": "string",
+    "password": "string"
+  }
+  ```
+- **Respostas:**
+  - **201 Created:** Usuário criado com sucesso.
+  - **400 Bad Request:** Email já está em uso ou dados inválidos.
 
-```bash
-# development
-$ npm run start
+#### GET `/users/:id`
+Obtém informações de um usuário pelo seu ID.
 
-# watch mode
-$ npm run start:dev
+- **Parâmetros:**
+  - `id`: ID do usuário.
+- **Respostas:**
+  - **200 OK:** Detalhes do usuário.
+  - **404 Not Found:** Usuário não encontrado.
 
-# production mode
-$ npm run start:prod
-```
+#### GET `/users`
+Retorna todos os usuários cadastrados.
 
-## Run tests
+- **Respostas:**
+  - **200 OK:** Lista de usuários.
 
-```bash
-# unit tests
-$ npm run test
+---
 
-# e2e tests
-$ npm run test:e2e
+### Declarações (`/declarations`)
 
-# test coverage
-$ npm run test:cov
-```
+#### POST `/declarations`
+Cria uma nova declaração fiscal.
 
-## Deployment
+- **Body:**
+  ```json
+  {
+    "userId": "number",
+    "year": "number",
+    "amount": "number"
+  }
+  ```
+- **Respostas:**
+  - **201 Created:** Declaração criada com sucesso.
+  - **400 Bad Request:** Dados inválidos.
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+#### GET `/declarations/user/:userId`
+Lista todas as declarações fiscais de um usuário.
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+- **Parâmetros:**
+  - `userId`: ID do usuário.
+- **Respostas:**
+  - **200 OK:** Lista de declarações.
+  - **404 Not Found:** Nenhuma declaração encontrada para o usuário.
 
-```bash
-$ npm install -g mau
-$ mau deploy
-```
+#### GET `/declarations/:id`
+Obtém informações de uma declaração fiscal pelo ID.
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+- **Parâmetros:**
+  - `id`: ID da declaração.
+- **Respostas:**
+  - **200 OK:** Detalhes da declaração.
+  - **404 Not Found:** Declaração não encontrada.
 
-## Resources
+#### GET `/declarations`
+Retorna todas as declarações fiscais cadastradas.
 
-Check out a few resources that may come in handy when working with NestJS:
+- **Respostas:**
+  - **200 OK:** Lista de declarações.
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+---
 
-## Support
+### Página Principal (`/`)
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+#### GET `/`
+Retorna uma mensagem de boas-vindas.
 
-## Stay in touch
+- **Respostas:**
+  - **200 OK:** Texto "Hello World!"
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+---
 
-## License
+## Arquitetura do Projeto
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+O projeto segue a arquitetura modular do NestJS, dividindo funcionalidades em módulos independentes:
+
+- **UsersModule:** Gerencia usuários e autenticação.
+- **DeclarationsModule:** Gerencia declarações fiscais.
+- **AppModule:** Configuração principal da aplicação.
+
+Cada módulo é composto por:
+- **Controller:** Define as rotas e interações HTTP.
+- **Service:** Contém a lógica de negócio.
+- **DTOs:** Define os formatos de dados de entrada e saída.
+- **Entidades:** Representações das tabelas no banco de dados.
+
+---
+
+## Execução com Docker
+
+1. Certifique-se de ter o Docker instalado em sua máquina.
+2. Clone o repositório:
+   ```bash
+   git clone https://github.com/tdiascontato/tax-declaration-api
+   cd tax-declaration-api
+   ```
+3. Construa e inicie os contêineres:
+   ```bash
+   docker-compose up --build
+   ```
+4. A API estará acessível em: `http://localhost:3000`
+
+### Comandos úteis
+
+- **Parar os contêineres:**
+  ```bash
+  docker-compose down
+  ```
+- **Reiniciar os contêineres:**
+  ```bash
+  docker-compose restart
+  ```
+
+---
+
+## Tecnologias Utilizadas
+
+- **NestJS:** Framework backend modular.
+- **Docker:** Contêinerização da aplicação.
+- **PostgreSQL:** Banco de dados relacional.
+- **TypeORM:** ORM para integração com o banco de dados.
+
