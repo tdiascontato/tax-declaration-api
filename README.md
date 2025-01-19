@@ -51,8 +51,8 @@ Cria uma nova declaração fiscal.
   ```json
   {
     "userId": "number",
-    "year": "number",
-    "amount": "number"
+    "year": "string",
+    "data": "JSON"
   }
   ```
 - **Respostas:**

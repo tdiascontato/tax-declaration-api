@@ -1,3 +1,4 @@
+// src\declarations\entities\declaration.entity.ts
 import {
     Entity,
     PrimaryGeneratedColumn,
@@ -14,12 +15,12 @@ import {
     id: number;
   
     @Column()
-    year: number;
+    year: string;
   
     @Column({ type: 'jsonb' })
-    data: Record<string, any>;
+    data: object;
   
-    @Column({ default: 'draft' }) // draft, submitted, rectified
+    @Column({ default: 'draft' }) // draft, submitted
     status: string;
   
     @CreateDateColumn()
