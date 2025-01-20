@@ -1,7 +1,8 @@
 // src\declarations\declarations.controller.ts
-import { Controller, Post, Body, Get, Param, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, HttpException, HttpStatus, Patch } from '@nestjs/common';
 import { DeclarationsService } from './declarations.service';
 import { CreateDeclarationDto } from './dto/create-declaration.dto';
+import { UpdateDeclarationDto } from './dto/update-declaration.dto';
 
 @Controller('declarations')
 export class DeclarationsController {
@@ -19,13 +20,26 @@ export class DeclarationsController {
     }
   }
 
+  @Patch('update/:declarationId') 
+  async update(@Param('declarationId') declarationId: string, @Body() updateDeclarationDto: UpdateDeclarationDto) {
+    try {
+      const id = parseInt(declarationId, 10);
+  
+      if (isNaN(id)) {
+        throw new HttpException('Invalid ID provided', HttpStatus.BAD_REQUEST);
+      }
+  
+      return await this.declarationsService.update(id, updateDeclarationDto);
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
+  }
+  
+
   @Get('user/:userId')
   async findByUser(@Param('userId') userId: number) {
     try {
       const declarations = await this.declarationsService.findByUser(userId);
-      if (!declarations.length) {
-        throw new HttpException('No declarations found for this user.', HttpStatus.NOT_FOUND);
-      }
       return declarations;
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.NOT_FOUND);

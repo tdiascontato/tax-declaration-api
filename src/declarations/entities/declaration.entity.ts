@@ -17,7 +17,7 @@ import {
     @Column()
     year: string;
   
-    @Column({ type: 'jsonb' })
+    @Column({ type: 'json' })
     data: object;
   
     @Column({ default: 'draft' }) // draft, submitted

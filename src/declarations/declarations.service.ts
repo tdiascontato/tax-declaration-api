@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { Declaration } from './entities/declaration.entity';
 import { CreateDeclarationDto } from './dto/create-declaration.dto';
 import { UsersService } from '../users/users.service';
+import { UpdateDeclarationDto } from './dto/update-declaration.dto';
 
 @Injectable()
 export class DeclarationsService {
@@ -30,6 +31,22 @@ export class DeclarationsService {
 
     return await this.declarationRepository.save(newDeclaration);
   }
+
+  async update(id: number, updateDeclarationDto: UpdateDeclarationDto): Promise<Declaration> {
+    const declaration = await this.findOne(id);
+  
+    if (!declaration) {
+      throw new NotFoundException(`Declaration with ID ${id} not found.`);
+    }
+  
+    declaration.data = { ...declaration.data, ...updateDeclarationDto };
+    const savedDeclaration = await this.declarationRepository.save(declaration);
+  
+    return savedDeclaration;
+  }
+  
+  
+  
 
   async findByUser(userId: number): Promise<Declaration[]> {
     const user = await this.usersService.findOneById(userId);
