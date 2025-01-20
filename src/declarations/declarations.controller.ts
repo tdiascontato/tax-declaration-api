@@ -1,5 +1,5 @@
 // src\declarations\declarations.controller.ts
-import { Controller, Post, Body, Get, Param, HttpException, HttpStatus, Patch } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, HttpException, HttpStatus, Patch, Delete } from '@nestjs/common';
 import { DeclarationsService } from './declarations.service';
 import { CreateDeclarationDto } from './dto/create-declaration.dto';
 import { UpdateDeclarationDto } from './dto/update-declaration.dto';
@@ -34,7 +34,22 @@ export class DeclarationsController {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
   }
-  
+
+  @Delete(':declarationId')
+  async remove(@Param('declarationId') declarationId: string) {
+    try {
+      const id = parseInt(declarationId, 10);
+
+      if (isNaN(id)) {
+        throw new HttpException('Invalid ID provided', HttpStatus.BAD_REQUEST);
+      }
+
+      await this.declarationsService.remove(id);
+      return { message: `Declaration with ID ${id} successfully deleted.` };
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
+  }  
 
   @Get('user/:userId')
   async findByUser(@Param('userId') userId: number) {

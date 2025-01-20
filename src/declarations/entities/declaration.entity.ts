@@ -20,7 +20,7 @@ import {
     @Column({ type: 'json' })
     data: object;
   
-    @Column({ default: 'draft' }) // draft, submitted
+    @Column({ default: 'Sketch' }) // Sketch, submitted
     status: string;
   
     @CreateDateColumn()

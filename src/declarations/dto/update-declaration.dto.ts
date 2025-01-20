@@ -12,5 +12,5 @@ export class UpdateDeclarationDto {
 
   @IsOptional()
   @IsString()
-  status?: string; // e.g., 'draft' or 'submitted'
+  status?: string; // e.g., '' or 'submitted'
 }

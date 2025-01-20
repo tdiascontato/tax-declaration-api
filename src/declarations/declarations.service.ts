@@ -1,7 +1,7 @@
 // src\declarations\declarations.service.ts
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 import { Declaration } from './entities/declaration.entity';
 import { CreateDeclarationDto } from './dto/create-declaration.dto';
 import { UsersService } from '../users/users.service';
@@ -38,14 +38,24 @@ export class DeclarationsService {
     if (!declaration) {
       throw new NotFoundException(`Declaration with ID ${id} not found.`);
     }
-  
+    declaration.year = updateDeclarationDto.year;
+    declaration.status = 'submitted';
     declaration.data = { ...declaration.data, ...updateDeclarationDto };
     const savedDeclaration = await this.declarationRepository.save(declaration);
   
     return savedDeclaration;
   }
   
-  
+  async remove(id: number): Promise<DeleteResult> {
+    const declaration = await this.findOne(id);
+
+    if (!declaration) {
+      throw new NotFoundException(`Declaration with ID ${id} not found.`);
+    }
+
+    return await this.declarationRepository.delete(id);
+  }
+
   
 
   async findByUser(userId: number): Promise<Declaration[]> {
