@@ -1,8 +1,10 @@
 # Tax Declaration API
 
+![alt text](public/terminal.png)
+
 ## Descrição
 
-A Tax Declaration API é um sistema desenvolvido para gerenciar usuários e declarações fiscais. Utiliza o framework [NestJS](https://nestjs.com/) para organização de módulos e é projetada para ser executada em um ambiente Docker.
+A Tax Declaration API é um sistema desenvolvido para gerenciar usuários e declarações fiscais. Utiliza o framework [NestJS](https://nestjs.com/) para organização de módulos e é projetada para servir o projeto Nextjs: https://github.com/tdiascontato/tax-declaration-api e pode ser executada em um ambiente Docker.
 
 ---
 
@@ -58,6 +60,28 @@ Cria uma nova declaração fiscal.
 - **Respostas:**
   - **201 Created:** Declaração criada com sucesso.
   - **400 Bad Request:** Dados inválidos.
+
+
+#### PATCH `/declarations/update/:declarationId`
+Atualiza uma declaração fiscal existente.
+
+- **Parâmetros:**
+  - `declarationId`: ID da declaração a ser atualizada.
+
+- **Respostas:**
+ - 200 OK: Declaração atualizada com sucesso.
+ - 400 Bad Request: Dados inválidos ou ID da declaração inválido.
+ - 404 Not Found: Declaração não encontrada.
+
+#### DELETE /declarations/:declarationId
+Remove uma declaração fiscal.
+
+**Parâmetros:**
+`declarationId`: ID da declaração a ser removida.
+Respostas:
+ - 200 OK: Declaração deletada com sucesso.
+ - 400 Bad Request: ID inválido.
+ - 404 Not Found: Declaração não encontrada.
 
 #### GET `/declarations/user/:userId`
 Lista todas as declarações fiscais de um usuário.
@@ -123,7 +147,7 @@ Cada módulo é composto por:
    ```bash
    docker-compose up --build
    ```
-4. A API estará acessível em: `http://localhost:3000`
+4. A API estará acessível em: `http://localhost:4000`
 
 ### Comandos úteis
 

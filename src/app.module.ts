@@ -13,7 +13,7 @@ import { Declaration } from './declarations/entities/declaration.entity';
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',//db - docker
+      host: 'db',//db - docker, localhost - dev
       port: 5432,
       username: 'postgres',
       password: 'postgres',

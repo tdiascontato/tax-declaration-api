@@ -16,7 +16,7 @@ export class DeclarationsService {
   ) {}
 
   async create(createDeclarationDto: CreateDeclarationDto): Promise<Declaration> {
-    const { userId, year, data } = createDeclarationDto;
+    const { userId, year, data, status } = createDeclarationDto;
 
     const user = await this.usersService.findOneById(userId);
     if (!user) {
@@ -27,6 +27,7 @@ export class DeclarationsService {
       year,
       data,
       user,
+      status,
     });
 
     return await this.declarationRepository.save(newDeclaration);

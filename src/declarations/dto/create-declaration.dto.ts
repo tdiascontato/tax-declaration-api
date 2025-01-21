@@ -10,4 +10,7 @@ export class CreateDeclarationDto {
 
   @IsNotEmpty()
   userId: number;
+
+  @IsNotEmpty()
+  status: string;
 }

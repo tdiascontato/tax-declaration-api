@@ -11,6 +11,7 @@ export class DeclarationsController {
   @Post()
   async create(@Body() createDeclarationDto: CreateDeclarationDto) {
     try {
+      console.log(createDeclarationDto)
       return await this.declarationsService.create(createDeclarationDto);
     } catch (error) {
       throw new HttpException(
